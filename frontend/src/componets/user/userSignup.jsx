@@ -13,10 +13,26 @@ function UserSignUp() {
     const [role, setRole] = useState('user');
     const [nameErrors, setNameErrors] = useState([]);
     const [emailErrors, setEmailErrors] = useState([]);
+    const [passwordErrors, setPasswordErrors] = useState([]);
 
 
-const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!name.trim()) {
+        setNameErrors(["Name cannot be blank"]);
+        return;
+    }
+
+    if (!email.trim()) {
+        setEmailErrors(["Email cannot be blank"]);
+        return;
+    }
+
+    if (!password.trim()) {
+        setPasswordErrors(["Password cannot be blank"]);
+        return;
+    }
 
     const userData = {
         name,
@@ -27,18 +43,16 @@ const handleSubmit = async (e) => {
 
     const data = await dispatch(signUp(userData));
 
-    if (data && Object.keys(data).length > 0) {
-        const nameErrors = data.name || [];
-        const emailErrors = data.email || [];
-        setNameErrors(nameErrors);
-        setEmailErrors(emailErrors);
-    } else if (data && data.message === 'User created successfully') {
+    if (data && data.message === 'User created successfully') {
+        
         await dispatch(login(email, password));
         navigate('/tickets');
     } else {
+       
         console.error("Unexpected response from server:", data);
     }
 };
+
     return (
         <div className="container mt-5">
             <div className="row justify-content-center">
@@ -88,6 +102,13 @@ const handleSubmit = async (e) => {
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                     />
+                                    {passwordErrors.length > 0 && (
+                                        <ul className="list-unstyled mt-1">
+                                            {passwordErrors.map((error, index) => (
+                                                <li key={index} className="text-danger">{error}</li>
+                                            ))}
+                                        </ul>
+                                    )}
                                 </div>
                                 <div className="mb-3">
                                     <label className="form-label">Role:</label>
