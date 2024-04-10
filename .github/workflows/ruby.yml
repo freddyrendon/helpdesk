@@ -45,9 +45,6 @@ jobs:
       - name: Change directory back to the root folder
         run: cd ..
 
-      - name: Echo DATABASE_URL secret
-        run: echo ${{ secrets.DATABASE_URL }}
-
       - name: Install PostgreSQL client
         run: sudo apt-get install -y postgresql-client
 
