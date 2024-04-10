@@ -1,0 +1,12 @@
+.ticket-link {
+    text-decoration: none;
+}
+
+.my-card-body:hover {
+    background-color: whitesmoke;
+    cursor: pointer;
+}
+
+p {
+    color: black;
+}
