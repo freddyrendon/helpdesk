@@ -26,7 +26,7 @@ function UserLogin() {
   const handleDemoLogin = async () => {
     // You can use predefined demo credentials for the demo login
     const demoEmail = 'admin@aa.io';
-    const demoPassword = '123456';
+    const demoPassword = '12345';
     
     const data = await dispatch(login(demoEmail, demoPassword));
     
