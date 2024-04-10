@@ -14,12 +14,26 @@ function UserLogin() {
     e.preventDefault();
   
     const data = await dispatch(login(email, password));
-    // debugger
   
     if (data.errors) {
       setErrors(data.errors); 
     } else {
-      localStorage.setItem('session_token', data.session_token); /// storing session on storage
+      localStorage.setItem('session_token', data.session_token);
+      navigate('/tickets');
+    }
+  };
+
+  const handleDemoLogin = async () => {
+    // You can use predefined demo credentials for the demo login
+    const demoEmail = 'admin@aa.io';
+    const demoPassword = '123456';
+    
+    const data = await dispatch(login(demoEmail, demoPassword));
+    
+    if (data.errors) {
+      setErrors(data.errors); 
+    } else {
+      localStorage.setItem('session_token', data.session_token);
       navigate('/tickets');
     }
   };
@@ -55,6 +69,9 @@ function UserLogin() {
                   <button className="btn btn-primary" type="submit">Login</button>
                 </div>
               </form>
+              <div className="mt-3">
+                <button className="btn btn-secondary" onClick={handleDemoLogin}>Demo Log In</button>
+              </div>
               {errors && <p className="text-danger mt-3">{errors}</p>} 
               <p className="mt-3">Not a user? <Link to="/signup">Click here</Link> to sign up.</p> 
             </div>
